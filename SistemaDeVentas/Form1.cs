@@ -235,11 +235,19 @@ namespace SistemaDeVentas
 
         private void BtnEliminarlista_Click(object sender, EventArgs e)
         {
-            int Index = dataGridView2.CurrentCell.RowIndex;
-            dataGridView2.Rows.RemoveAt(Index);
-            int a = Convert.ToInt32(dataGridView2.Rows[Index].Cells[2].Value);
-            int d = 0;
-
+            
+            if (dataGridView2.SelectedRows.Count != 0)
+            {
+                int Index = dataGridView2.CurrentCell.RowIndex;
+                int a = Convert.ToInt32(dataGridView2[2, Index].Value);
+                ListaP[Pproductos.SelectedIndex].Cantidad = ListaP[Pproductos.SelectedIndex].Cantidad + a;
+                UPD();
+                dataGridView2.Rows.RemoveAt(Index);
+            }
+            else 
+            {
+                MessageBox.Show("No se selecciono una fila");
+            }
 
         }
     }

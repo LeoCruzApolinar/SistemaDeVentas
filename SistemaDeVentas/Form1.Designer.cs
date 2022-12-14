@@ -100,7 +100,7 @@
             this.BtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnSalir.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnSalir.ForeColor = System.Drawing.Color.White;
-            this.BtnSalir.Location = new System.Drawing.Point(1244, 9);
+            this.BtnSalir.Location = new System.Drawing.Point(1196, 9);
             this.BtnSalir.Name = "BtnSalir";
             this.BtnSalir.Size = new System.Drawing.Size(94, 51);
             this.BtnSalir.TabIndex = 0;
@@ -113,7 +113,7 @@
             this.BtnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnEliminar.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnEliminar.ForeColor = System.Drawing.Color.White;
-            this.BtnEliminar.Location = new System.Drawing.Point(1084, 7);
+            this.BtnEliminar.Location = new System.Drawing.Point(1028, 8);
             this.BtnEliminar.Name = "BtnEliminar";
             this.BtnEliminar.Size = new System.Drawing.Size(94, 53);
             this.BtnEliminar.TabIndex = 4;
@@ -127,7 +127,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 698);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1349, 72);
+            this.panel4.Size = new System.Drawing.Size(1302, 72);
             this.panel4.TabIndex = 4;
             // 
             // panel3
@@ -137,7 +137,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 377);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1349, 332);
+            this.panel3.Size = new System.Drawing.Size(1302, 332);
             this.panel3.TabIndex = 3;
             // 
             // dataGridView1
@@ -149,7 +149,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(1349, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(1302, 315);
             this.dataGridView1.TabIndex = 0;
             // 
             // PmetodoDepago
@@ -275,7 +275,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1349, 309);
+            this.panel2.Size = new System.Drawing.Size(1302, 309);
             this.panel2.TabIndex = 2;
             // 
             // Dcantidad
@@ -323,9 +323,9 @@
             this.panel5.Controls.Add(this.LbLNtotal);
             this.panel5.Controls.Add(this.LbLTotal);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(670, 0);
+            this.panel5.Location = new System.Drawing.Point(644, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(679, 309);
+            this.panel5.Size = new System.Drawing.Size(658, 309);
             this.panel5.TabIndex = 17;
             // 
             // BtnEliminarlista
@@ -334,7 +334,7 @@
             this.BtnEliminarlista.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnEliminarlista.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnEliminarlista.ForeColor = System.Drawing.Color.White;
-            this.BtnEliminarlista.Location = new System.Drawing.Point(461, 271);
+            this.BtnEliminarlista.Location = new System.Drawing.Point(440, 271);
             this.BtnEliminarlista.Name = "BtnEliminarlista";
             this.BtnEliminarlista.Size = new System.Drawing.Size(206, 32);
             this.BtnEliminarlista.TabIndex = 5;
@@ -357,11 +357,12 @@
             this.Total});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView2.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 29;
-            this.dataGridView2.Size = new System.Drawing.Size(679, 267);
+            this.dataGridView2.Size = new System.Drawing.Size(658, 267);
             this.dataGridView2.TabIndex = 0;
             // 
             // ID
@@ -492,7 +493,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1349, 68);
+            this.panel1.Size = new System.Drawing.Size(1302, 68);
             this.panel1.TabIndex = 1;
             // 
             // Form1
@@ -500,7 +501,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1349, 770);
+            this.ClientSize = new System.Drawing.Size(1302, 770);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
