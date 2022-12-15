@@ -127,7 +127,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 698);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1302, 72);
+            this.panel4.Size = new System.Drawing.Size(1311, 72);
             this.panel4.TabIndex = 4;
             // 
             // panel3
@@ -137,7 +137,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 377);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1302, 332);
+            this.panel3.Size = new System.Drawing.Size(1311, 332);
             this.panel3.TabIndex = 3;
             // 
             // dataGridView1
@@ -149,7 +149,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(1302, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(1311, 315);
             this.dataGridView1.TabIndex = 0;
             // 
             // PmetodoDepago
@@ -275,7 +275,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1302, 309);
+            this.panel2.Size = new System.Drawing.Size(1311, 309);
             this.panel2.TabIndex = 2;
             // 
             // Dcantidad
@@ -323,7 +323,7 @@
             this.panel5.Controls.Add(this.LbLNtotal);
             this.panel5.Controls.Add(this.LbLTotal);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(644, 0);
+            this.panel5.Location = new System.Drawing.Point(653, 0);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(658, 309);
             this.panel5.TabIndex = 17;
@@ -493,7 +493,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1302, 68);
+            this.panel1.Size = new System.Drawing.Size(1311, 68);
             this.panel1.TabIndex = 1;
             // 
             // Form1

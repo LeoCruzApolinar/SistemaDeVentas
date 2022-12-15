@@ -26,13 +26,27 @@
     public class Factura
     {
         public string Id { get; set; }
-        public string NombreDelCliente { get; set; }
-        public string NombreDelEmpleado { get; set; }
-        public string Producto { get; set; }
-        public int Cantidad { get; set; }
-        public int Total { get; set; }
-        public string FechaDeFacturacion { get; set; }
+        public ClientesFactura ClientesFacturaList { get; set; }
+        public List<Productosfactura> ProductosfacturaList { get; set; }
+        public string Fecha { get; set; }
         public string HoraDeFacturacion { get; set; }
+        public string MetodoDePago { get; set; }
+        public int Total { get; set; }
+
+    }
+    public class ClientesFactura
+    {
+        public string Id { get; set; }
+        public string Nombre { get; set; }
+        public string Telefono { get; set; }
+    }
+    public class Productosfactura
+    {
+        public string Id { get; set; }
+        public string Nombre { get; set; }
+        public int Cantidad { get; set; }
+        public int PrecioXUnidad { get; set; }
+        public int Total { get; set; }
 
     }
 }

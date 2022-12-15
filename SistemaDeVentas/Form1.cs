@@ -4,6 +4,7 @@ using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
 using SistemaDeVenta;
+using System.Drawing;
 using System.IO;
 using System.Security.Policy;
 using System.Windows.Forms;
@@ -22,6 +23,7 @@ namespace SistemaDeVentas
         };
         static IFirebaseClient client = null;
         List<Productos> ListaP = new List<Productos>();
+        List<Clientes> ListaC = new List<Clientes>();
         public Form1()
         {
             InitializeComponent();
@@ -121,8 +123,9 @@ namespace SistemaDeVentas
 
                 });
                 PClientes.Items.Add(elemento.Value.Nombre);
+               
             }
-          
+            ListaC = ListaClientes;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -139,29 +142,91 @@ namespace SistemaDeVentas
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            
+            //validacion
+            EnviarFactura(GetFacturas());
         }
-        public async void CrearFactura() 
+        string generarIdF()
+        { 
+            return "a"; 
+        }
+        public async void EnviarFactura( List<Factura> factura) 
         {
-            var Factura = new Productos()
+            //ENviar a firabase
+        }
+        int TotalF() 
+        {
+            int total = 0;
+            for (int i = 0; i < dataGridView2.Rows.Count; i++) 
             {
-
-            };
-            //FirebaseResponse responsed = client.Update();
+                string t = dataGridView2[4, i].Value.ToString();
+                t = t[..^2];
+                total = total + int.Parse(t);
+            }
+            return total;
         }
-        public async void Atualizar() 
+        public List<Productosfactura> GetPRODUCTOS()
         {
-            //int A = int.Parse(textBox1.Text);
-            //int B = ListaP[Pproductos.SelectedIndex].Cantidad;
-            //ListaP[Pproductos.SelectedIndex].Cantidad = B - A;
-            //string URL = "/Datos/Productos/" + ListaP[Pproductos.SelectedIndex].Id;
-            //var dproductos = new Productos()
-            //{
-            //    Cantidad = ListaP[Pproductos.SelectedIndex].Cantidad,
-            //    Nombre = ListaP[Pproductos.SelectedIndex].Nombre,
-            //    Precio = ListaP[Pproductos.SelectedIndex].Precio,
-            //};
-            //FirebaseResponse responsed = client.Update(URL, dproductos);
+            List<Productosfactura> ProductosfacturaLista = new List<Productosfactura>();
+
+
+            for (int i = 0; i < dataGridView2.Rows.Count; i++) 
+            {
+                string C = dataGridView2[3, i].Value.ToString();
+                C = C[..^2];
+                string t = dataGridView2[4, i].Value.ToString();
+                t = t[..^2];
+                string l = dataGridView2[0, i].Value.ToString();
+                ProductosfacturaLista.Add(new Productosfactura()
+                {
+                    Id = dataGridView2[0, i].Value.ToString(),
+                    Nombre = dataGridView2[1,i].Value.ToString(),
+                    Cantidad = Convert.ToInt32(dataGridView2[2,i].Value),
+                    PrecioXUnidad = int.Parse(C),
+                    Total = int.Parse(t),
+                    
+                });
+            }
+
+            return ProductosfacturaLista;
+        }
+        public  List<Factura> GetFacturas() 
+        {
+            List<Factura> facturaList = new List<Factura>
+            {
+                new Factura
+                {
+                   Id = generarIdF(),
+                   Fecha = DateTime.UtcNow.ToString("dd/MM/yyyy"),
+                   MetodoDePago = PmetodoDepago.Text,
+                   HoraDeFacturacion = DateTime.Now.ToString("hh:mm tt"),
+                   Total = TotalF(),
+                   ClientesFacturaList = new ClientesFactura
+                   {
+                       Id = ListaC[0].Id.ToString(),
+                       Nombre = ListaC[0].Nombre.ToString(),
+                       Telefono = ListaC[0].Telefono.ToString()
+                   },
+                   ProductosfacturaList = GetPRODUCTOS(),
+
+                }
+            };
+
+            return facturaList;
+           
+        }
+        public async void Atualizar(int index) 
+        {
+            int A = int.Parse(textBox1.Text);
+            int B = ListaP[index].Cantidad;
+            ListaP[Pproductos.SelectedIndex].Cantidad = B - A;
+            string URL = "/Datos/Productos/" + ListaP[Pproductos.SelectedIndex].Id;
+            var dproductos = new Productos()
+            {
+                Cantidad = ListaP[Pproductos.SelectedIndex].Cantidad,
+                Nombre = ListaP[Pproductos.SelectedIndex].Nombre,
+                Precio = ListaP[Pproductos.SelectedIndex].Precio,
+            };
+            FirebaseResponse responsed = client.Update(URL, dproductos);
         }
         private void BTNCancelar_Click(object sender, EventArgs e)
         {
@@ -173,16 +238,16 @@ namespace SistemaDeVentas
         void Enlistar() 
         {
             bool add = true;
-            //for (int i = 0; i < dataGridView2.Rows.Count; i++) 
-            //{
-            //    if (dataGridView2[0,i].Value == ListaP[Pproductos.SelectedIndex].Id) 
-            //    {
-            //        int s = Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value); ;
-            //        dataGridView2[2,i].Value = s + int.Parse(textBox1.Text);
-            //        dataGridView2[4, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
-            //        add = false;
-            //    }
-            //}
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                if (dataGridView2[0, i].Value == ListaP[Pproductos.SelectedIndex].Id)
+                {
+                    int s = Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value); ;
+                    dataGridView2[2, i].Value = s + int.Parse(textBox1.Text);
+                    dataGridView2[4, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
+                    add = false;
+                }
+            }
             if (add)
             {
                 dataGridView2.Rows.Add();
@@ -248,7 +313,6 @@ namespace SistemaDeVentas
             {
                 MessageBox.Show("No se selecciono una fila");
             }
-
         }
     }
 
