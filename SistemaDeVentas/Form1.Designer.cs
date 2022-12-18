@@ -52,11 +52,6 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.BtnEliminarlista = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnEnlistar = new System.Windows.Forms.Button();
             this.Pproductos = new System.Windows.Forms.ComboBox();
             this.lblT = new System.Windows.Forms.Label();
@@ -65,6 +60,12 @@
             this.LBLCajero = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -127,7 +128,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 698);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1311, 72);
+            this.panel4.Size = new System.Drawing.Size(1537, 72);
             this.panel4.TabIndex = 4;
             // 
             // panel3
@@ -137,7 +138,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 377);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1311, 332);
+            this.panel3.Size = new System.Drawing.Size(1537, 332);
             this.panel3.TabIndex = 3;
             // 
             // dataGridView1
@@ -149,7 +150,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(1311, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(1537, 315);
             this.dataGridView1.TabIndex = 0;
             // 
             // PmetodoDepago
@@ -275,7 +276,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1311, 309);
+            this.panel2.Size = new System.Drawing.Size(1537, 309);
             this.panel2.TabIndex = 2;
             // 
             // Dcantidad
@@ -323,9 +324,9 @@
             this.panel5.Controls.Add(this.LbLNtotal);
             this.panel5.Controls.Add(this.LbLTotal);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(653, 0);
+            this.panel5.Location = new System.Drawing.Point(731, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(658, 309);
+            this.panel5.Size = new System.Drawing.Size(806, 309);
             this.panel5.TabIndex = 17;
             // 
             // BtnEliminarlista
@@ -353,6 +354,7 @@
             this.ID,
             this.Nombre,
             this.Cantidad,
+            this.Tipo,
             this.Precio,
             this.Total});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -362,48 +364,8 @@
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 29;
-            this.dataGridView2.Size = new System.Drawing.Size(658, 267);
+            this.dataGridView2.Size = new System.Drawing.Size(806, 267);
             this.dataGridView2.TabIndex = 0;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 6;
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 125;
-            // 
-            // Nombre
-            // 
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.MinimumWidth = 6;
-            this.Nombre.Name = "Nombre";
-            this.Nombre.ReadOnly = true;
-            this.Nombre.Width = 125;
-            // 
-            // Cantidad
-            // 
-            this.Cantidad.HeaderText = "Cantidad";
-            this.Cantidad.MinimumWidth = 6;
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.ReadOnly = true;
-            this.Cantidad.Width = 125;
-            // 
-            // Precio
-            // 
-            this.Precio.HeaderText = "Precio";
-            this.Precio.MinimumWidth = 6;
-            this.Precio.Name = "Precio";
-            this.Precio.ReadOnly = true;
-            this.Precio.Width = 125;
-            // 
-            // Total
-            // 
-            this.Total.HeaderText = "Total";
-            this.Total.MinimumWidth = 6;
-            this.Total.Name = "Total";
-            this.Total.ReadOnly = true;
-            this.Total.Width = 125;
             // 
             // BtnEnlistar
             // 
@@ -493,15 +455,63 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1311, 68);
+            this.panel1.Size = new System.Drawing.Size(1537, 68);
             this.panel1.TabIndex = 1;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 6;
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 125;
+            // 
+            // Nombre
+            // 
+            this.Nombre.HeaderText = "Nombre";
+            this.Nombre.MinimumWidth = 6;
+            this.Nombre.Name = "Nombre";
+            this.Nombre.ReadOnly = true;
+            this.Nombre.Width = 125;
+            // 
+            // Cantidad
+            // 
+            this.Cantidad.HeaderText = "Cantidad";
+            this.Cantidad.MinimumWidth = 6;
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.ReadOnly = true;
+            this.Cantidad.Width = 125;
+            // 
+            // Tipo
+            // 
+            this.Tipo.HeaderText = "Tipo";
+            this.Tipo.MinimumWidth = 6;
+            this.Tipo.Name = "Tipo";
+            this.Tipo.ReadOnly = true;
+            this.Tipo.Width = 125;
+            // 
+            // Precio
+            // 
+            this.Precio.HeaderText = "Precio";
+            this.Precio.MinimumWidth = 6;
+            this.Precio.Name = "Precio";
+            this.Precio.ReadOnly = true;
+            this.Precio.Width = 125;
+            // 
+            // Total
+            // 
+            this.Total.HeaderText = "Total";
+            this.Total.MinimumWidth = 6;
+            this.Total.Name = "Total";
+            this.Total.ReadOnly = true;
+            this.Total.Width = 125;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1302, 770);
+            this.ClientSize = new System.Drawing.Size(1537, 770);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -556,11 +566,12 @@
         private Label LBLprecio;
         private DataGridView dataGridView2;
         private Panel panel5;
+        private Button BtnEliminarlista;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn Nombre;
         private DataGridViewTextBoxColumn Cantidad;
+        private DataGridViewTextBoxColumn Tipo;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Total;
-        private Button BtnEliminarlista;
     }
 }

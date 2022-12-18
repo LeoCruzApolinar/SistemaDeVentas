@@ -3,6 +3,7 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SistemaDeVenta;
 using System.Drawing;
 using System.IO;
@@ -10,6 +11,7 @@ using System.Security.Policy;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SistemaDeVentas
 {
@@ -93,7 +95,9 @@ namespace SistemaDeVentas
                     Id = elemento.Key,
                     Nombre = elemento.Value.Nombre,
                     Cantidad = elemento.Value.Cantidad,
-                    Precio = elemento.Value.Precio
+                    Precio = elemento.Value.Precio,
+                    Tipo = elemento.Value.Tipo
+                    
                 });
                 Pproductos.Items.Add(elemento.Value.Nombre);
             }
@@ -143,22 +147,33 @@ namespace SistemaDeVentas
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             //validacion
-            EnviarFactura(GetFacturas());
+            GetFacturas();
         }
-        string generarIdF()
-        { 
-            return "a"; 
-        }
-        public async void EnviarFactura( List<Factura> factura) 
+        public string generateID()
         {
-            //ENviar a firabase
+            return Guid.NewGuid().ToString("N");
+        }
+        string generarIdF(int a)
+        {
+            string Id;
+            string fecha = DateTime.UtcNow.ToString("dd-MM-yyyy");
+            string Hora = DateTime.Now.ToString("HH-mm");
+            string IdCliente = ListaC[PClientes.SelectedIndex].Id.ToString();
+            string guid = generateID();
+            Id = IdCliente+"-"+fecha+"-"+Hora+"-"+guid;
+            if (a == 1) 
+            {
+                Id = IdCliente + "-" + fecha + "-" + Hora+"-" + guid;
+            }
+            else { Id = IdCliente + "-" + fecha + "-" + Hora; }
+            return Id; 
         }
         int TotalF() 
         {
             int total = 0;
             for (int i = 0; i < dataGridView2.Rows.Count; i++) 
             {
-                string t = dataGridView2[4, i].Value.ToString();
+                string t = dataGridView2[5, i].Value.ToString();
                 t = t[..^2];
                 total = total + int.Parse(t);
             }
@@ -171,9 +186,9 @@ namespace SistemaDeVentas
 
             for (int i = 0; i < dataGridView2.Rows.Count; i++) 
             {
-                string C = dataGridView2[3, i].Value.ToString();
+                string C = dataGridView2[4, i].Value.ToString();
                 C = C[..^2];
-                string t = dataGridView2[4, i].Value.ToString();
+                string t = dataGridView2[5, i].Value.ToString();
                 t = t[..^2];
                 string l = dataGridView2[0, i].Value.ToString();
                 ProductosfacturaLista.Add(new Productosfactura()
@@ -183,35 +198,35 @@ namespace SistemaDeVentas
                     Cantidad = Convert.ToInt32(dataGridView2[2,i].Value),
                     PrecioXUnidad = int.Parse(C),
                     Total = int.Parse(t),
+                    Tipo = dataGridView2[3,i].Value.ToString()
                     
                 });
             }
 
             return ProductosfacturaLista;
         }
-        public  List<Factura> GetFacturas() 
+        public void GetFacturas() 
         {
-            List<Factura> facturaList = new List<Factura>
+            var facturaList = new Factura
             {
-                new Factura
-                {
-                   Id = generarIdF(),
+              
+                   Id = generarIdF(2),
                    Fecha = DateTime.UtcNow.ToString("dd/MM/yyyy"),
                    MetodoDePago = PmetodoDepago.Text,
                    HoraDeFacturacion = DateTime.Now.ToString("hh:mm tt"),
                    Total = TotalF(),
                    ClientesFacturaList = new ClientesFactura
                    {
-                       Id = ListaC[0].Id.ToString(),
-                       Nombre = ListaC[0].Nombre.ToString(),
-                       Telefono = ListaC[0].Telefono.ToString()
+                       Id = ListaC[PClientes.SelectedIndex].Id.ToString(),
+                       Nombre = ListaC[PClientes.SelectedIndex].Nombre.ToString(),
+                       Telefono = ListaC[PClientes.SelectedIndex].Telefono.ToString()
                    },
                    ProductosfacturaList = GetPRODUCTOS(),
 
-                }
+                
             };
-
-            return facturaList;
+            string d = generarIdF(1);
+            SetResponse response = client.Set("/Facturas" + "/" + d, facturaList);
            
         }
         public async void Atualizar(int index) 
@@ -244,7 +259,7 @@ namespace SistemaDeVentas
                 {
                     int s = Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value); ;
                     dataGridView2[2, i].Value = s + int.Parse(textBox1.Text);
-                    dataGridView2[4, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
+                    dataGridView2[5, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
                     add = false;
                 }
             }
@@ -255,8 +270,9 @@ namespace SistemaDeVentas
                 dataGridView2[0, X].Value = ListaP[Pproductos.SelectedIndex].Id;
                 dataGridView2[1, X].Value = ListaP[Pproductos.SelectedIndex].Nombre;
                 dataGridView2[2, X].Value = int.Parse(textBox1.Text);
-                dataGridView2[3, X].Value = ListaP[Pproductos.SelectedIndex].Precio + " $";
-                dataGridView2[4, X].Value = ListaP[Pproductos.SelectedIndex].Precio * int.Parse(textBox1.Text) + " $";
+                dataGridView2[3, X].Value = ListaP[Pproductos.SelectedIndex].Tipo;
+                dataGridView2[4, X].Value = ListaP[Pproductos.SelectedIndex].Precio + " $";
+                dataGridView2[5, X].Value = ListaP[Pproductos.SelectedIndex].Precio * int.Parse(textBox1.Text) + " $";
             }
         }
         private void BtnEnlistar_Click(object sender, EventArgs e)
