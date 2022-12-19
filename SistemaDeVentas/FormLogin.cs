@@ -62,7 +62,18 @@ namespace SistemaDeVentas
             BtnAdmin.ForeColor = Color.White;
             AdminLog = true;
         }
-
+        public void logueoM(List<LOG> UssList,int x) 
+        {
+            string key = DateTime.UtcNow.ToString("dd-MM-yyyy") + "-" + DateTime.Now.ToString("HH-mm") + "-" + UssList[x].ID;
+            var Log = new Logtime
+            {
+                Fecha = DateTime.UtcNow.ToString("dd/MM/yyyy"),
+                Hora = DateTime.Now.ToString("hh:mm tt"),
+                IdEmpleado = UssList[x].ID,
+                Nombre = UssList[x].Nombre,
+            };
+            SetResponse response = client.Set("LogEmpleado" + "/" + key, Log);
+        }
         private void BTNLOG_Click(object sender, EventArgs e)
         {
             if (AdminLog)
@@ -136,6 +147,7 @@ namespace SistemaDeVentas
                     Form1 frm = new Form1();
                     frm.ENombre = UssList[uss].Nombre;
                     frm.EID = UssList[uss].ID;
+                    logueoM(UssList, uss);
                     frm.Show();
                 }
             }

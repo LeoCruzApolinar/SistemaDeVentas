@@ -5,6 +5,7 @@ using FireSharp.Response;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SistemaDeVenta;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.IO;
 using System.Security.Policy;
@@ -399,6 +400,14 @@ namespace SistemaDeVentas
             }
 
           
+        }
+
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            FormLogin mv = new FormLogin();
+            mv.Show();
+
+            this.Close();
         }
     }
 

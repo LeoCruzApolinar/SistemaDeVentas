@@ -59,4 +59,11 @@
         public string Nombre {set; get;}
         public string ID {set; get;}
     }
+    public class Logtime 
+    {
+        public string Fecha { set; get;}
+        public string Hora { set; get;}
+        public string IdEmpleado { set; get;}
+        public string Nombre { set; get; }
+    }
 }
