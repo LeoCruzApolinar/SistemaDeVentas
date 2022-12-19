@@ -32,6 +32,7 @@
         public string Fecha { get; set; }
         public string HoraDeFacturacion { get; set; }
         public string MetodoDePago { get; set; }
+        public string Facturador { get; set; }
         public int Total { get; set; }
 
     }
@@ -50,5 +51,12 @@
         public int PrecioXUnidad { get; set; }
         public int Total { get; set; }
 
+    }
+    public class LOG 
+    {
+        public string User {set; get;}
+        public string Pass {set; get;}
+        public string Nombre {set; get;}
+        public string ID {set; get;}
     }
 }

@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LbLNtotal = new System.Windows.Forms.Label();
             this.LbLTotal = new System.Windows.Forms.Label();
             this.BtnSalir = new System.Windows.Forms.Button();
             this.BtnEliminar = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.LBLTH = new System.Windows.Forms.Label();
+            this.LBLHora = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.PmetodoDepago = new System.Windows.Forms.ComboBox();
             this.lblProducto = new System.Windows.Forms.Label();
             this.LBLmpago = new System.Windows.Forms.Label();
@@ -51,7 +55,13 @@
             this.LBLprecio = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.BtnEliminarlista = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.DataTableLista = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnEnlistar = new System.Windows.Forms.Button();
             this.Pproductos = new System.Windows.Forms.ComboBox();
             this.lblT = new System.Windows.Forms.Label();
@@ -60,18 +70,13 @@
             this.LBLCajero = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataTableLista)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +84,7 @@
             // 
             this.LbLNtotal.AutoSize = true;
             this.LbLNtotal.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LbLNtotal.Location = new System.Drawing.Point(77, 277);
+            this.LbLNtotal.Location = new System.Drawing.Point(68, 277);
             this.LbLNtotal.Name = "LbLNtotal";
             this.LbLNtotal.Size = new System.Drawing.Size(50, 23);
             this.LbLNtotal.TabIndex = 10;
@@ -101,7 +106,7 @@
             this.BtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnSalir.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnSalir.ForeColor = System.Drawing.Color.White;
-            this.BtnSalir.Location = new System.Drawing.Point(1196, 9);
+            this.BtnSalir.Location = new System.Drawing.Point(1281, 29);
             this.BtnSalir.Name = "BtnSalir";
             this.BtnSalir.Size = new System.Drawing.Size(94, 51);
             this.BtnSalir.TabIndex = 0;
@@ -114,7 +119,7 @@
             this.BtnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnEliminar.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnEliminar.ForeColor = System.Drawing.Color.White;
-            this.BtnEliminar.Location = new System.Drawing.Point(1028, 8);
+            this.BtnEliminar.Location = new System.Drawing.Point(13, 27);
             this.BtnEliminar.Name = "BtnEliminar";
             this.BtnEliminar.Size = new System.Drawing.Size(94, 53);
             this.BtnEliminar.TabIndex = 4;
@@ -123,35 +128,64 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.LBLTH);
+            this.panel4.Controls.Add(this.LBLHora);
             this.panel4.Controls.Add(this.BtnEliminar);
             this.panel4.Controls.Add(this.BtnSalir);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 698);
+            this.panel4.Location = new System.Drawing.Point(0, 703);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1537, 72);
+            this.panel4.Size = new System.Drawing.Size(1387, 101);
             this.panel4.TabIndex = 4;
+            // 
+            // LBLTH
+            // 
+            this.LBLTH.AutoSize = true;
+            this.LBLTH.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LBLTH.Location = new System.Drawing.Point(572, 45);
+            this.LBLTH.Name = "LBLTH";
+            this.LBLTH.Size = new System.Drawing.Size(76, 31);
+            this.LBLTH.TabIndex = 6;
+            this.LBLTH.Text = "label2";
+            // 
+            // LBLHora
+            // 
+            this.LBLHora.AutoSize = true;
+            this.LBLHora.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LBLHora.Location = new System.Drawing.Point(484, 34);
+            this.LBLHora.Name = "LBLHora";
+            this.LBLHora.Size = new System.Drawing.Size(97, 45);
+            this.LBLHora.TabIndex = 5;
+            this.LBLHora.Text = "Hora:";
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.Controls.Add(this.dataGridView1);
+            this.panel3.Controls.Add(this.flowLayoutPanel1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 377);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1537, 332);
+            this.panel3.Size = new System.Drawing.Size(1387, 323);
             this.panel3.TabIndex = 3;
             // 
-            // dataGridView1
+            // flowLayoutPanel1
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(1537, 315);
-            this.dataGridView1.TabIndex = 0;
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.Controls.Add(this.panel6);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1387, 323);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // panel6
+            // 
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel6.Location = new System.Drawing.Point(3, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(202, 317);
+            this.panel6.TabIndex = 0;
             // 
             // PmetodoDepago
             // 
@@ -276,7 +310,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 68);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1537, 309);
+            this.panel2.Size = new System.Drawing.Size(1387, 309);
             this.panel2.TabIndex = 2;
             // 
             // Dcantidad
@@ -320,13 +354,13 @@
             // panel5
             // 
             this.panel5.Controls.Add(this.BtnEliminarlista);
-            this.panel5.Controls.Add(this.dataGridView2);
+            this.panel5.Controls.Add(this.DataTableLista);
             this.panel5.Controls.Add(this.LbLNtotal);
             this.panel5.Controls.Add(this.LbLTotal);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(731, 0);
+            this.panel5.Location = new System.Drawing.Point(641, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(806, 309);
+            this.panel5.Size = new System.Drawing.Size(746, 309);
             this.panel5.TabIndex = 17;
             // 
             // BtnEliminarlista
@@ -343,120 +377,29 @@
             this.BtnEliminarlista.UseVisualStyleBackColor = false;
             this.BtnEliminarlista.Click += new System.EventHandler(this.BtnEliminarlista_Click);
             // 
-            // dataGridView2
+            // DataTableLista
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AllowUserToOrderColumns = true;
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DataTableLista.AllowUserToAddRows = false;
+            this.DataTableLista.AllowUserToDeleteRows = false;
+            this.DataTableLista.AllowUserToOrderColumns = true;
+            this.DataTableLista.BackgroundColor = System.Drawing.Color.White;
+            this.DataTableLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataTableLista.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.Nombre,
             this.Cantidad,
             this.Tipo,
             this.Precio,
             this.Total});
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView2.MultiSelect = false;
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersWidth = 51;
-            this.dataGridView2.RowTemplate.Height = 29;
-            this.dataGridView2.Size = new System.Drawing.Size(806, 267);
-            this.dataGridView2.TabIndex = 0;
-            // 
-            // BtnEnlistar
-            // 
-            this.BtnEnlistar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.BtnEnlistar.FlatAppearance.BorderSize = 0;
-            this.BtnEnlistar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnEnlistar.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnEnlistar.ForeColor = System.Drawing.Color.White;
-            this.BtnEnlistar.Location = new System.Drawing.Point(377, 102);
-            this.BtnEnlistar.Name = "BtnEnlistar";
-            this.BtnEnlistar.Size = new System.Drawing.Size(94, 52);
-            this.BtnEnlistar.TabIndex = 16;
-            this.BtnEnlistar.Text = "Enlistar";
-            this.BtnEnlistar.UseVisualStyleBackColor = false;
-            this.BtnEnlistar.Click += new System.EventHandler(this.BtnEnlistar_Click);
-            // 
-            // Pproductos
-            // 
-            this.Pproductos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.Pproductos.FormattingEnabled = true;
-            this.Pproductos.Location = new System.Drawing.Point(13, 47);
-            this.Pproductos.Name = "Pproductos";
-            this.Pproductos.Size = new System.Drawing.Size(323, 28);
-            this.Pproductos.TabIndex = 15;
-            this.Pproductos.SelectedIndexChanged += new System.EventHandler(this.Pproductos_SelectedIndexChanged);
-            // 
-            // lblT
-            // 
-            this.lblT.AutoSize = true;
-            this.lblT.Font = new System.Drawing.Font("Segoe UI Variable Display", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblT.Location = new System.Drawing.Point(279, 9);
-            this.lblT.Name = "lblT";
-            this.lblT.Size = new System.Drawing.Size(327, 53);
-            this.lblT.TabIndex = 0;
-            this.lblT.Text = "Registro de venta";
-            this.lblT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LBLFecha
-            // 
-            this.LBLFecha.AutoSize = true;
-            this.LBLFecha.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LBLFecha.Location = new System.Drawing.Point(873, 8);
-            this.LBLFecha.Name = "LBLFecha";
-            this.LBLFecha.Size = new System.Drawing.Size(59, 25);
-            this.LBLFecha.TabIndex = 1;
-            this.LBLFecha.Text = "label1";
-            // 
-            // lblF
-            // 
-            this.lblF.AutoSize = true;
-            this.lblF.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblF.Location = new System.Drawing.Point(816, 8);
-            this.lblF.Name = "lblF";
-            this.lblF.Size = new System.Drawing.Size(61, 25);
-            this.lblF.TabIndex = 2;
-            this.lblF.Text = "Fecha:";
-            // 
-            // LBLCajero
-            // 
-            this.LBLCajero.AutoSize = true;
-            this.LBLCajero.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LBLCajero.Location = new System.Drawing.Point(12, 34);
-            this.LBLCajero.Name = "LBLCajero";
-            this.LBLCajero.Size = new System.Drawing.Size(59, 23);
-            this.LBLCajero.TabIndex = 3;
-            this.LBLCajero.Text = "Cajero";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 25);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Persona en caja:";
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.LBLCajero);
-            this.panel1.Controls.Add(this.lblF);
-            this.panel1.Controls.Add(this.LBLFecha);
-            this.panel1.Controls.Add(this.lblT);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1537, 68);
-            this.panel1.TabIndex = 1;
+            this.DataTableLista.Dock = System.Windows.Forms.DockStyle.Top;
+            this.DataTableLista.Location = new System.Drawing.Point(0, 0);
+            this.DataTableLista.MultiSelect = false;
+            this.DataTableLista.Name = "DataTableLista";
+            this.DataTableLista.ReadOnly = true;
+            this.DataTableLista.RowHeadersWidth = 51;
+            this.DataTableLista.RowTemplate.Height = 29;
+            this.DataTableLista.Size = new System.Drawing.Size(746, 267);
+            this.DataTableLista.TabIndex = 0;
             // 
             // ID
             // 
@@ -506,12 +449,108 @@
             this.Total.ReadOnly = true;
             this.Total.Width = 125;
             // 
+            // BtnEnlistar
+            // 
+            this.BtnEnlistar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.BtnEnlistar.FlatAppearance.BorderSize = 0;
+            this.BtnEnlistar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BtnEnlistar.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BtnEnlistar.ForeColor = System.Drawing.Color.White;
+            this.BtnEnlistar.Location = new System.Drawing.Point(377, 102);
+            this.BtnEnlistar.Name = "BtnEnlistar";
+            this.BtnEnlistar.Size = new System.Drawing.Size(94, 52);
+            this.BtnEnlistar.TabIndex = 16;
+            this.BtnEnlistar.Text = "Enlistar";
+            this.BtnEnlistar.UseVisualStyleBackColor = false;
+            this.BtnEnlistar.Click += new System.EventHandler(this.BtnEnlistar_Click);
+            // 
+            // Pproductos
+            // 
+            this.Pproductos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.Pproductos.FormattingEnabled = true;
+            this.Pproductos.Location = new System.Drawing.Point(13, 47);
+            this.Pproductos.Name = "Pproductos";
+            this.Pproductos.Size = new System.Drawing.Size(323, 28);
+            this.Pproductos.TabIndex = 15;
+            this.Pproductos.SelectedIndexChanged += new System.EventHandler(this.Pproductos_SelectedIndexChanged_1);
+            // 
+            // lblT
+            // 
+            this.lblT.AutoSize = true;
+            this.lblT.Font = new System.Drawing.Font("Segoe UI Variable Display", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblT.Location = new System.Drawing.Point(279, 9);
+            this.lblT.Name = "lblT";
+            this.lblT.Size = new System.Drawing.Size(327, 53);
+            this.lblT.TabIndex = 0;
+            this.lblT.Text = "Registro de venta";
+            this.lblT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LBLFecha
+            // 
+            this.LBLFecha.AutoSize = true;
+            this.LBLFecha.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LBLFecha.Location = new System.Drawing.Point(1226, 9);
+            this.LBLFecha.Name = "LBLFecha";
+            this.LBLFecha.Size = new System.Drawing.Size(59, 25);
+            this.LBLFecha.TabIndex = 1;
+            this.LBLFecha.Text = "label1";
+            // 
+            // lblF
+            // 
+            this.lblF.AutoSize = true;
+            this.lblF.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblF.Location = new System.Drawing.Point(1169, 9);
+            this.lblF.Name = "lblF";
+            this.lblF.Size = new System.Drawing.Size(61, 25);
+            this.lblF.TabIndex = 2;
+            this.lblF.Text = "Fecha:";
+            // 
+            // LBLCajero
+            // 
+            this.LBLCajero.AutoSize = true;
+            this.LBLCajero.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LBLCajero.Location = new System.Drawing.Point(12, 34);
+            this.LBLCajero.Name = "LBLCajero";
+            this.LBLCajero.Size = new System.Drawing.Size(59, 23);
+            this.LBLCajero.TabIndex = 3;
+            this.LBLCajero.Text = "Cajero";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(137, 25);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Persona en caja:";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.LBLCajero);
+            this.panel1.Controls.Add(this.lblF);
+            this.panel1.Controls.Add(this.LBLFecha);
+            this.panel1.Controls.Add(this.lblT);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1387, 68);
+            this.panel1.TabIndex = 1;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1537, 770);
+            this.ClientSize = new System.Drawing.Size(1387, 804);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -521,13 +560,14 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataTableLista)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -541,7 +581,6 @@
         private Label LbLNtotal;
         private Label LbLTotal;
         private Panel panel3;
-        private DataGridView dataGridView1;
         private ComboBox PmetodoDepago;
         private Label lblProducto;
         private Label LBLmpago;
@@ -564,7 +603,7 @@
         private Label LblCantidadStock;
         private Label Dprecio;
         private Label LBLprecio;
-        private DataGridView dataGridView2;
+        private DataGridView DataTableLista;
         private Panel panel5;
         private Button BtnEliminarlista;
         private DataGridViewTextBoxColumn ID;
@@ -573,5 +612,10 @@
         private DataGridViewTextBoxColumn Tipo;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Total;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panel6;
+        private Label LBLTH;
+        private Label LBLHora;
+        private System.Windows.Forms.Timer timer1;
     }
 }

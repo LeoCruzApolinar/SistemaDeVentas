@@ -26,6 +26,12 @@ namespace SistemaDeVentas
         static IFirebaseClient client = null;
         List<Productos> ListaP = new List<Productos>();
         List<Clientes> ListaC = new List<Clientes>();
+        FormFactura[] ListFactura = new FormFactura[1];
+        int n = 0;
+        int p = 0;
+        public string User;
+        public string ENombre;
+        public string EID;
         public Form1()
         {
             InitializeComponent();
@@ -134,20 +140,63 @@ namespace SistemaDeVentas
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            timer1.Start();
+            LBLCajero.Text = ENombre + " ( "+EID+" )";
             client = new FireSharp.FirebaseClient(Conexion);
             DatosConexion();
             PmetodoDepago.DropDownStyle = ComboBoxStyle.DropDownList;
             Pproductos.DropDownStyle = ComboBoxStyle.DropDownList;
             Dcantidad.Text = "";
             Dprecio.Text = "";
+           
 
 
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
+
             //validacion
-            GetFacturas();
+            
+            if (PmetodoDepago.SelectedIndex != -1 && PClientes.SelectedIndex != -1 && DataTableLista.RowCount > 0)
+            {
+                Atualizar();
+                AgregarFactura(GetFacturas());
+                textBox1.Text = "";
+                Pproductos.SelectedItem = null;
+                PmetodoDepago.SelectedItem = null;
+                PClientes.SelectedItem = null;
+                DataTableLista.Rows.Clear();
+                LbLNtotal.Text = "";
+                Dprecio.Text = "";
+                Dcantidad.Text ="";
+
+            }
+            else
+            {
+                MessageBox.Show("Los campos {Cliente}, {Metodo de pago} y {El listado de productos} deben de estar completos");
+            }
+
+            //construir
+        }
+        void AgregarFactura(object facturaList) 
+        {
+
+            ListFactura[n] = new FormFactura();
+            ListFactura[n].Dock = DockStyle.Top;
+            ListFactura[n].FacturaList = facturaList;
+
+            int c = flowLayoutPanel1.Controls[p].Controls.Count;
+            if (c == 3)
+            {
+                p++;
+                flowLayoutPanel1.Controls.Add(new Panel());
+                flowLayoutPanel1.Controls[p].Dock = DockStyle.Left;
+                flowLayoutPanel1.Controls[p].Size = new Size(202, 317);
+            }
+            flowLayoutPanel1.Controls[p].Controls.Add(ListFactura[n]);
+            n++;
+            Array.Resize(ref ListFactura, n + 1);
         }
         public string generateID()
         {
@@ -171,9 +220,9 @@ namespace SistemaDeVentas
         int TotalF() 
         {
             int total = 0;
-            for (int i = 0; i < dataGridView2.Rows.Count; i++) 
+            for (int i = 0; i < DataTableLista.Rows.Count; i++) 
             {
-                string t = dataGridView2[5, i].Value.ToString();
+                string t = DataTableLista[5, i].Value.ToString();
                 t = t[..^2];
                 total = total + int.Parse(t);
             }
@@ -184,64 +233,70 @@ namespace SistemaDeVentas
             List<Productosfactura> ProductosfacturaLista = new List<Productosfactura>();
 
 
-            for (int i = 0; i < dataGridView2.Rows.Count; i++) 
+            for (int i = 0; i < DataTableLista.Rows.Count; i++) 
             {
-                string C = dataGridView2[4, i].Value.ToString();
+                string C = DataTableLista[4, i].Value.ToString();
                 C = C[..^2];
-                string t = dataGridView2[5, i].Value.ToString();
+                string t = DataTableLista[5, i].Value.ToString();
                 t = t[..^2];
-                string l = dataGridView2[0, i].Value.ToString();
+                
                 ProductosfacturaLista.Add(new Productosfactura()
                 {
-                    Id = dataGridView2[0, i].Value.ToString(),
-                    Nombre = dataGridView2[1,i].Value.ToString(),
-                    Cantidad = Convert.ToInt32(dataGridView2[2,i].Value),
+                    Id = DataTableLista[0, i].Value.ToString(),
+                    Nombre = DataTableLista[1,i].Value.ToString(),
+                    Cantidad = Convert.ToInt32(DataTableLista[2,i].Value),
                     PrecioXUnidad = int.Parse(C),
                     Total = int.Parse(t),
-                    Tipo = dataGridView2[3,i].Value.ToString()
+                    Tipo = DataTableLista[3,i].Value.ToString()
                     
                 });
             }
 
             return ProductosfacturaLista;
         }
-        public void GetFacturas() 
+        public object GetFacturas() 
         {
             var facturaList = new Factura
             {
-              
-                   Id = generarIdF(2),
-                   Fecha = DateTime.UtcNow.ToString("dd/MM/yyyy"),
-                   MetodoDePago = PmetodoDepago.Text,
-                   HoraDeFacturacion = DateTime.Now.ToString("hh:mm tt"),
-                   Total = TotalF(),
-                   ClientesFacturaList = new ClientesFactura
-                   {
-                       Id = ListaC[PClientes.SelectedIndex].Id.ToString(),
-                       Nombre = ListaC[PClientes.SelectedIndex].Nombre.ToString(),
-                       Telefono = ListaC[PClientes.SelectedIndex].Telefono.ToString()
-                   },
-                   ProductosfacturaList = GetPRODUCTOS(),
 
-                
+                Id = generarIdF(2),
+                Fecha = DateTime.UtcNow.ToString("dd/MM/yyyy"),
+                MetodoDePago = PmetodoDepago.Text,
+                HoraDeFacturacion = DateTime.Now.ToString("hh:mm tt"),
+                Total = TotalF(),
+                ClientesFacturaList = new ClientesFactura
+                {
+                    Id = ListaC[PClientes.SelectedIndex].Id.ToString(),
+                    Nombre = ListaC[PClientes.SelectedIndex].Nombre.ToString(),
+                    Telefono = ListaC[PClientes.SelectedIndex].Telefono.ToString()
+                },
+                ProductosfacturaList = GetPRODUCTOS(),
+                Facturador = LBLCajero.Text,
+
+
             };
             string d = generarIdF(1);
-            SetResponse response = client.Set("/Facturas" + "/" + d, facturaList);
-           
+            SetResponse response = client.Set("/Facturas" + "/" + d, facturaList); 
+           return facturaList;
         }
-        public async void Atualizar(int index) 
+        public async void Atualizar() 
         {
-            int A = int.Parse(textBox1.Text);
-            int B = ListaP[index].Cantidad;
-            ListaP[Pproductos.SelectedIndex].Cantidad = B - A;
-            string URL = "/Datos/Productos/" + ListaP[Pproductos.SelectedIndex].Id;
-            var dproductos = new Productos()
+            for (int i = 0; i < DataTableLista.RowCount; i++) 
             {
-                Cantidad = ListaP[Pproductos.SelectedIndex].Cantidad,
-                Nombre = ListaP[Pproductos.SelectedIndex].Nombre,
-                Precio = ListaP[Pproductos.SelectedIndex].Precio,
-            };
-            FirebaseResponse responsed = client.Update(URL, dproductos);
+                FirebaseResponse responsesP = client.Get("Datos/Productos/"+ DataTableLista[0, i].Value.ToString()+"/"+"Cantidad");
+                int c = int.Parse(responsesP.Body);
+                string P = DataTableLista[4, i].Value.ToString();
+                P = P[..^2];
+                var dproductos = new Productos()
+                {
+                    Cantidad = (c - Convert.ToInt32(DataTableLista[2,i].Value)),
+                    Nombre = DataTableLista[1,i].Value.ToString(),
+                    Precio = int.Parse(P),
+                    Tipo = DataTableLista[3,i].Value.ToString(),
+                };
+                string URL = "/Datos/Productos/" + DataTableLista[0,i].Value.ToString();
+                FirebaseResponse responsed = client.Update(URL, dproductos);
+            }
         }
         private void BTNCancelar_Click(object sender, EventArgs e)
         {
@@ -253,26 +308,26 @@ namespace SistemaDeVentas
         void Enlistar() 
         {
             bool add = true;
-            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            for (int i = 0; i < DataTableLista.Rows.Count; i++)
             {
-                if (dataGridView2[0, i].Value == ListaP[Pproductos.SelectedIndex].Id)
+                if (DataTableLista[0, i].Value == ListaP[Pproductos.SelectedIndex].Id)
                 {
-                    int s = Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value); ;
-                    dataGridView2[2, i].Value = s + int.Parse(textBox1.Text);
-                    dataGridView2[5, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
+                    int s = Convert.ToInt32(DataTableLista.Rows[i].Cells[2].Value); ;
+                    DataTableLista[2, i].Value = s + int.Parse(textBox1.Text);
+                    DataTableLista[5, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
                     add = false;
                 }
             }
             if (add)
             {
-                dataGridView2.Rows.Add();
-                int X = dataGridView2.Rows.Count - 1;
-                dataGridView2[0, X].Value = ListaP[Pproductos.SelectedIndex].Id;
-                dataGridView2[1, X].Value = ListaP[Pproductos.SelectedIndex].Nombre;
-                dataGridView2[2, X].Value = int.Parse(textBox1.Text);
-                dataGridView2[3, X].Value = ListaP[Pproductos.SelectedIndex].Tipo;
-                dataGridView2[4, X].Value = ListaP[Pproductos.SelectedIndex].Precio + " $";
-                dataGridView2[5, X].Value = ListaP[Pproductos.SelectedIndex].Precio * int.Parse(textBox1.Text) + " $";
+                DataTableLista.Rows.Add();
+                int X = DataTableLista.Rows.Count - 1;
+                DataTableLista[0, X].Value = ListaP[Pproductos.SelectedIndex].Id;
+                DataTableLista[1, X].Value = ListaP[Pproductos.SelectedIndex].Nombre;
+                DataTableLista[2, X].Value = int.Parse(textBox1.Text);
+                DataTableLista[3, X].Value = ListaP[Pproductos.SelectedIndex].Tipo;
+                DataTableLista[4, X].Value = ListaP[Pproductos.SelectedIndex].Precio + " $";
+                DataTableLista[5, X].Value = ListaP[Pproductos.SelectedIndex].Precio * int.Parse(textBox1.Text) + " $";
             }
         }
         private void BtnEnlistar_Click(object sender, EventArgs e)
@@ -287,6 +342,7 @@ namespace SistemaDeVentas
                     ListaP[Pproductos.SelectedIndex].Cantidad = B-A;
                     UPD();
                     Enlistar();
+                    LbLNtotal.Text = TotalF().ToString()+" $";
                 }
                 else
                 {
@@ -304,10 +360,6 @@ namespace SistemaDeVentas
                 MessageBox.Show("Los campos {Cantidad} y {Productos} deben de estar completos");
             }
         }
-        private void Pproductos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UPD();
-        }
         void UPD() 
         {
             Dprecio.Text = ListaP[Pproductos.SelectedIndex].Precio.ToString() + " $";
@@ -317,18 +369,36 @@ namespace SistemaDeVentas
         private void BtnEliminarlista_Click(object sender, EventArgs e)
         {
             
-            if (dataGridView2.SelectedRows.Count != 0)
+            if (DataTableLista.SelectedRows.Count != 0)
             {
-                int Index = dataGridView2.CurrentCell.RowIndex;
-                int a = Convert.ToInt32(dataGridView2[2, Index].Value);
+                int Index = DataTableLista.CurrentCell.RowIndex;
+                int a = Convert.ToInt32(DataTableLista[2, Index].Value);
                 ListaP[Pproductos.SelectedIndex].Cantidad = ListaP[Pproductos.SelectedIndex].Cantidad + a;
                 UPD();
-                dataGridView2.Rows.RemoveAt(Index);
+                DataTableLista.Rows.RemoveAt(Index);
             }
             else 
             {
                 MessageBox.Show("No se selecciono una fila");
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            LBLTH.Text = DateTime.Now.ToString("hh :mm tt");
+        }
+
+        private void Pproductos_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            try 
+            { 
+                  UPD();
+            }
+            catch 
+            { 
+            }
+
+          
         }
     }
 
