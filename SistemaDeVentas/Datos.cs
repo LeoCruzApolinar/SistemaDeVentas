@@ -17,13 +17,6 @@
         public string Telefono { get; set; }
         public string Cumpleanos { get; set; }
     }
-    public class Empleados
-    {
-        public string Id { get; set; }
-        public string Nombre { get; set; }
-        public int Cantidad { get; set; }
-        public int Precio { get; set; }
-    }
     public class Factura
     {
         public string Id { get; set; }
@@ -66,4 +59,40 @@
         public string IdEmpleado { set; get;}
         public string Nombre { set; get; }
     }
+    public class Objproductos
+    {
+        public string Nombre { set; get; }
+        public string Tipo { set; get; }
+        public int PrecioXUnidad { set; get; }
+        public int Cantidad { set; get; }
+    }
+    public class Empleados
+    {
+        public string Nombre {get; set;}
+        public string Apellido { get; set; }
+        public string Cedula { get; set; }
+        public string Correo { get; set; }
+        public string Cumpleanos { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
+        public string Pass { get; set; }
+        public string User { get; set; }
+        public string id { get; set; }
+
+    }
+    public class Cclientes
+    {
+
+    }
+    public class lista 
+    {
+        public string Orden {get; set;}
+        public string key { get; set; }
+        public object obj { get; set; }
+
+    }
+
+
+
+
 }

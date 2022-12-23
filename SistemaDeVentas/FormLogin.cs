@@ -124,7 +124,7 @@ namespace SistemaDeVentas
                         User = elemento.Value.User,
                         Pass = elemento.Value.Pass,
                         Nombre = elemento.Value.Nombre,
-                        ID = elemento.Value.ID,
+                        ID = elemento.Key,
                     });
                 }
                 for (int i = 0; i < UssList.Count; i++)

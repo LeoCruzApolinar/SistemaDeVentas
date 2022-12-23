@@ -277,7 +277,7 @@ namespace SistemaDeVentas
 
             };
             string d = generarIdF(1);
-            SetResponse response = client.Set("/Facturas" + "/" + d, facturaList); 
+            SetResponse response = client.Set("/Facturas/"+ d, facturaList); 
            return facturaList;
         }
         public async void Atualizar() 
