@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.DataFormats;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace SistemaDeVentas
@@ -551,6 +552,123 @@ namespace SistemaDeVentas
             FormLogin frm = new FormLogin();
 
             frm.Show();
+        }
+
+        private void aTxTp_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '0')
+            {
+                e.Handled = true;
+                if (aTxTp.Text != "" && aTxTp.Text[0] != '0')
+                {
+                    e.Handled = false;
+                }
+
+            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            try
+            {
+                if (aTxTp.Text[0] == '0')
+                {
+                    aTxTp.Text = aTxTp.Text.Trim(new Char[] { ' ', '0', '.' });
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void aTxTc_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '0')
+            {
+                e.Handled = true;
+                if (aTxTc.Text != "" && aTxTc.Text[0] != '0')
+                {
+                    e.Handled = false;
+                }
+
+            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            try
+            {
+                if (aTxTc.Text[0] == '0')
+                {
+                    aTxTc.Text = aTxTc.Text.Trim(new Char[] { ' ', '0', '.' });
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void aTxTpEditar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aTxTpEditar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '0')
+            {
+                e.Handled = true;
+                if (aTxTpEditar.Text != "" && aTxTpEditar.Text[0] != '0')
+                {
+                    e.Handled = false;
+                }
+
+            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            try
+            {
+                if (aTxTpEditar.Text[0] == '0')
+                {
+                    aTxTpEditar.Text = aTxTpEditar.Text.Trim(new Char[] { ' ', '0', '.' });
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void aTxTcEditar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '0')
+            {
+                e.Handled = true;
+                if (aTxTcEditar.Text != "" && aTxTcEditar.Text[0] != '0')
+                {
+                    e.Handled = false;
+                }
+
+            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            try
+            {
+                if (aTxTcEditar.Text[0] == '0')
+                {
+                    aTxTcEditar.Text = aTxTcEditar.Text.Trim(new Char[] { ' ', '0', '.' });
+                }
+            }
+            catch
+            {
+
+            }
         }
 
 

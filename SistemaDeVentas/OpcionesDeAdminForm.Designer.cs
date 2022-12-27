@@ -868,6 +868,7 @@
             this.aTxTc.Name = "aTxTc";
             this.aTxTc.Size = new System.Drawing.Size(165, 27);
             this.aTxTc.TabIndex = 5;
+            this.aTxTc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.aTxTc_KeyPress);
             // 
             // aTxTp
             // 
@@ -875,6 +876,7 @@
             this.aTxTp.Name = "aTxTp";
             this.aTxTp.Size = new System.Drawing.Size(165, 27);
             this.aTxTp.TabIndex = 3;
+            this.aTxTp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.aTxTp_KeyPress);
             // 
             // aTxTn
             // 
@@ -1103,6 +1105,8 @@
             this.aTxTpEditar.Name = "aTxTpEditar";
             this.aTxTpEditar.Size = new System.Drawing.Size(165, 27);
             this.aTxTpEditar.TabIndex = 12;
+            this.aTxTpEditar.TextChanged += new System.EventHandler(this.aTxTpEditar_TextChanged);
+            this.aTxTpEditar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.aTxTpEditar_KeyPress);
             // 
             // aTxTcEditar
             // 
@@ -1110,6 +1114,7 @@
             this.aTxTcEditar.Name = "aTxTcEditar";
             this.aTxTcEditar.Size = new System.Drawing.Size(165, 27);
             this.aTxTcEditar.TabIndex = 13;
+            this.aTxTcEditar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.aTxTcEditar_KeyPress);
             // 
             // panel5
             // 
