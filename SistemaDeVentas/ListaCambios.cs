@@ -34,5 +34,12 @@ namespace SistemaDeVentas
             }
 
         }
+
+        private void ListaCambios_Load(object sender, EventArgs e)
+        {
+            label4.Text = Nombre;
+            label5.Text = Remitente;
+            label6.Text = Accion;
+        }
     }
 }

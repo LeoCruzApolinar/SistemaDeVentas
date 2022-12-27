@@ -9,12 +9,16 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.DataFormats;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace SistemaDeVentas
 {
@@ -45,7 +49,7 @@ namespace SistemaDeVentas
             {
                 Nombre = aTxTn.Text,
                 Cantidad = int.Parse(aTxTc.Text),
-                Precio = int.Parse(aTxTp.Text),
+                PrecioXUnidad = int.Parse(aTxTp.Text),
                 Tipo = aTxTt.Text,
                 Id = aTxTn.Text + "-" + generateID()
             });
@@ -69,12 +73,15 @@ namespace SistemaDeVentas
                     PrecioXUnidad = int.Parse(aTxTp.Text),
                     Tipo = aTxTt.Text,
                 };
-                Cambios("Productos","Agregar", kEY, date);
+                Cambios("Productos","Agregar", kEY, date, aTxTn.Text);
             }
         }
 
         public void AnadirAlista() 
         {
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
+            listBox3.Items.Clear();
             Dictionary<string, Productos> DLProductos = new Dictionary<string, Productos>();
             FirebaseResponse responsesP = client.Get("Datos/Productos");
             DLProductos = JsonConvert.DeserializeObject<Dictionary<string, Productos>>(responsesP.Body);
@@ -87,7 +94,7 @@ namespace SistemaDeVentas
                     Id = elemento.Key,
                     Nombre = elemento.Value.Nombre,
                     Cantidad = elemento.Value.Cantidad,
-                    Precio = elemento.Value.Precio,
+                    PrecioXUnidad = elemento.Value.PrecioXUnidad,
                     Tipo = elemento.Value.Tipo
 
                 });
@@ -152,7 +159,7 @@ namespace SistemaDeVentas
             client = new FireSharp.FirebaseClient(Conexion);
             AnadirAlista();
         }
-        public void Cambios(string remitente, string Orden, string key, object data) 
+        public void Cambios(string remitente, string Orden, string key, object data, string nombre) 
         {
             Datos.Add(new lista()
             {
@@ -161,18 +168,16 @@ namespace SistemaDeVentas
                 obj = data,
 
             });
-            var date = (Objproductos)data;
 
             listaCambios[n] = new ListaCambios();
             listaCambios[n].Dock = DockStyle.Top;
-            listaCambios[n].Nombre = date.Nombre;
+            listaCambios[n].Nombre = nombre;
             listaCambios[n].Accion = Orden;
             listaCambios[n].Remitente = remitente;
             PanelCambios.Controls.Add(listaCambios[n]);
             int ss = listaCambios[n].select;
             n++;
             Array.Resize(ref listaCambios, n + 1);
-            Eliminar();
         }
         void Eliminar() 
         {
@@ -181,9 +186,384 @@ namespace SistemaDeVentas
                 if (listaCambios[i] != null && listaCambios[i].select == 1)
                 {
                     PanelCambios.Controls.Remove(listaCambios[i]);
-         
+                    Datos.RemoveAt(i);
+                    listaCambios = ElimarDelArregloOPCForm(listaCambios, i);
+                    n--;
+                    i--;
                 }
             }
         }
+        public ListaCambios[] ElimarDelArregloOPCForm(ListaCambios[] datos, int x) 
+        {
+            ListaCambios[] ejemplo = new ListaCambios[listaCambios.Length - 1];
+            int A = 0;
+            for (int i = 0; i < listaCambios.Length; i++)
+            {
+                if (i == x) 
+                {
+                    i++;
+                    ejemplo[A] = datos[i];
+                }
+                else 
+                {
+                    ejemplo[A] = datos[i];
+                }
+                A++;
+            }
+            datos = ejemplo;
+            return datos;
+        }
+        void AgregarFireBase()
+        {
+            for (int i = 0; i < listaCambios.Length; i++)
+            {
+                if (listaCambios[i] != null && listaCambios[i].select == 1)
+                {
+                    UbicarEnFirebse(i);
+                }
+            }
+            Eliminar();
+        }
+        void UbicarEnFirebse(int x) 
+        {
+            switch (listaCambios[x].Remitente)
+            {
+                case "Productos":
+                   
+                    switch (listaCambios[x].Accion)
+                    {
+                        case "Agregar":
+
+                            SetResponse response = client.Set("/Datos/Productos/" + Datos[x].key, Datos[x].obj);
+
+                            break;
+
+                        case "Eliminar":
+
+                            if (ListaP.Count != 1)
+                            {
+                                DeleteResponse responseE = client.Delete("/Datos/Productos/" + Datos[x].key);
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("La cantida de productos no puede ser 0");
+                            }
+
+                            break;
+
+                        case "Actualizar":
+
+                            SetResponse responses = client.Set("/Datos/Productos/" + Datos[x].key, Datos[x].obj);
+
+                            break;
+
+                    }
+                    break;
+
+                break;
+
+                case "Empleados":
+                    
+                    switch (listaCambios[x].Accion)
+                    {
+                        case "Agregar":
+                            SetResponse response = client.Set("/Datos/Empleados/" + Datos[x].key, Datos[x].obj);
+                            break;
+
+                        case "Eliminar":
+
+                           if (ListaE.Count != 1) 
+                           {
+                                DeleteResponse responseE = client.Delete("/Datos/Empleados/" + Datos[x].key);
+                                
+                           }
+                            else 
+                            {
+                                MessageBox.Show("La cantida de empleado no puede ser 0");
+                            }
+                            break;
+
+                        case "Actualizar":
+                            SetResponse responses = client.Set("/Datos/Empleados/" + Datos[x].key, Datos[x].obj);
+                            break;
+
+                    }
+                    break;
+
+                break;
+
+                case "Clientes":
+                    
+                    switch (listaCambios[x].Accion)
+                    {
+                        case "Agregar":
+                            SetResponse response = client.Set("/Datos/Clientes/" + Datos[x].key, Datos[x].obj);
+                            break;
+
+                        case "Eliminar":
+
+                            if (ListaC.Count != 1)
+                            {
+                                DeleteResponse responseE = client.Delete("/Datos/Clientes/" + Datos[x].key);
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("La cantida de Clientes no puede ser 0");
+                            }
+                            break;
+
+                        case "Actualizar":
+
+                            SetResponse respons = client.Set("/Datos/Clientes/" + Datos[x].key, Datos[x].obj);
+
+                            break;
+
+                    }
+                    break;
+
+               break;
+
+            }
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Eliminar();
+        }
+        public void CopiaDeSeguridad()
+        {
+            FirebaseResponse responsess = client.Get("/");
+            string JSON = responsess.Body;
+            string FileCopia = DateTime.UtcNow.ToString("MM-dd-yyyy") + DateTime.Now.ToString("HH-mm-ss") + "CopiaDeSegurida";
+            string fileName = @"C:\Users\leona\OneDrive\Documentos\ProyectosVisual\SistemaDeVentas\Backup\" + FileCopia+".txt";
+            StreamWriter writer = new StreamWriter(fileName);
+            writer.Write(JSON);
+            writer.Close();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CopiaDeSeguridad();
+            AgregarFireBase();
+            AnadirAlista();
+        }
+
+        private void EbtnA_Click(object sender, EventArgs e)
+        {
+            if (eTxTn.Text != "" && eTxTa.Text != "" && cTxTc.Text != "" && eTxTb.Text != "" 
+                && eTxTt.Text != "" && eTxTcedula.Text != "" && eTxTu.Text != "" 
+                && eTxTpass.Text != "" && txtAPD.Text != "")
+            {
+                string kEY = eTxTn.Text + "-" + generateID();
+                var date = new ObjEmpleados
+                {
+                    Nombre = eTxTn.Text,
+                    Apellido = eTxTa.Text,
+                    Cedula = eTxTcedula.Text,
+                    Correo = cTxTc.Text,
+                    Cumpleanos = eTxTb.Text,
+                    Direccion = txtAPD.Text,
+                    User = eTxTu.Text,
+                    Pass = eTxTpass.Text,
+                    Telefono = eTxTt.Text,
+                   
+
+                };
+                Cambios("Empleados", "Agregar", kEY, date, eTxTn.Text);
+            }
+        }
+
+        private void CbtnA_Click(object sender, EventArgs e)
+        {
+            if (cTxTn.Text != "" && cTxTa.Text != "" && cTxTcorreo.Text != "" && cTxTcumple.Text != ""
+                && cTxTt.Text != "")
+            {
+                string kEY = cTxTn.Text + "-" + generateID();
+                var date = new ObjClientes
+                {
+                    Nombre = cTxTn.Text,
+                    Apellido = cTxTa.Text,
+                    Correo = cTxTcorreo.Text,
+                    Cumpleanos = cTxTcumple.Text,
+                    Telefono= cTxTt.Text,
+
+
+                };
+                Cambios("Clientes", "Agregar", kEY, date, cTxTn.Text);
+            }
+        }
+
+        private void listBox2_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try {
+
+                eTxTnEdit.Text = ListaE[listBox2.SelectedIndex].Nombre;
+                eTxTaEdit.Text = ListaE[listBox2.SelectedIndex].Apellido;
+                cTxTcEdit.Text = ListaE[listBox2.SelectedIndex].Correo;
+                eTxTbEditar.Text = ListaE[listBox2.SelectedIndex].Cumpleanos;
+                eTxTtEditar.Text = ListaE[listBox2.SelectedIndex].Telefono;
+                eTxTcedulaEditar.Text = ListaE[listBox2.SelectedIndex].Cedula;
+                eTxTuEditar.Text = ListaE[listBox2.SelectedIndex].User;
+                eTxTpassEditar.Text = ListaE[listBox2.SelectedIndex].Pass;
+                EditarDTXTEP.Text = ListaE[listBox2.SelectedIndex].Direccion;
+            }
+            catch { }
+           
+        }
+
+        private void EbtnE_Click(object sender, EventArgs e)
+        {
+            var date = new ObjEmpleados
+            {
+            };
+            if(listBox2.SelectedIndex != -1) 
+            {
+                Cambios("Empleados", "Eliminar", ListaE[listBox2.SelectedIndex].id, date, ListaE[listBox2.SelectedIndex].Nombre);
+            }
+            else 
+            {
+                MessageBox.Show("Debe seleccionar un empleado");
+            }
+            
+        }
+
+        private void PbtnE_Click(object sender, EventArgs e)
+        {
+            var date = new Objproductos
+            {
+            };
+            if (listBox1.SelectedIndex != -1)
+            {
+                Cambios("Productos", "Eliminar", ListaP[listBox1.SelectedIndex].Id, date, ListaP[listBox1.SelectedIndex].Nombre);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un producto");
+            }
+        }
+
+        private void CbtnE_Click(object sender, EventArgs e)
+        {
+
+            var date = new ObjClientes
+            {
+            };
+            if (listBox3.SelectedIndex != -1)
+            {
+                Cambios("Clientes", "Eliminar", ListaC[listBox3.SelectedIndex].Id, date, ListaC[listBox3.SelectedIndex].Nombre);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un cliente");
+            }
+
+        }
+
+        private void CbtnEditar_Click(object sender, EventArgs e)
+        {
+            if (cTxTnEdit.Text != "" && cTxTaEdit.Text != "" && cTxTcorreoEditar.Text != "" && cTxTcumpleEditar.Text != ""
+                && cTxTtEditar.Text != "")
+            {
+                string kEY = ListaC[listBox3.SelectedIndex].Id;
+                var date = new ObjClientes
+                {
+                    Nombre = cTxTnEdit.Text,
+                    Apellido = cTxTaEdit.Text,
+                    Correo = cTxTcorreoEditar.Text,
+                    Cumpleanos = cTxTcumpleEditar.Text,
+                    Telefono = cTxTtEditar.Text,
+
+
+                };
+                Cambios("Clientes", "Actualizar", kEY, date, cTxTnEdit.Text);
+            }
+        }
+        private void listBox3_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try {
+                cTxTnEdit.Text = ListaC[listBox3.SelectedIndex].Nombre;
+                cTxTaEdit.Text = ListaC[listBox3.SelectedIndex].Apellido;
+                cTxTcorreoEditar.Text = ListaC[listBox3.SelectedIndex].Correo;
+                cTxTcumpleEditar.Text = ListaC[listBox3.SelectedIndex].Cumpleanos;
+                cTxTtEditar.Text = ListaC[listBox3.SelectedIndex].Telefono;
+
+            } catch { }
+           
+           
+        }
+
+        private void EbtnED_Click(object sender, EventArgs e)
+        {
+            if (eTxTnEdit.Text != "" && eTxTaEdit.Text != "" && cTxTcEdit.Text != "" && eTxTbEditar.Text != ""
+               && eTxTtEditar.Text != "" && eTxTcedulaEditar.Text != "" && eTxTuEditar.Text != ""
+               && eTxTpassEditar.Text != "" && EditarDTXTEP.Text != "")
+            {
+                string kEY = ListaE[listBox2.SelectedIndex].id;
+                var date = new ObjEmpleados
+                {
+                    Nombre = eTxTnEdit.Text,
+                    Apellido = eTxTaEdit.Text,
+                    Cedula = eTxTcedulaEditar.Text,
+                    Correo = cTxTcEdit.Text,
+                    Cumpleanos = eTxTbEditar.Text,
+                    Direccion = EditarDTXTEP.Text,
+                    User = eTxTuEditar.Text,
+                    Pass = eTxTpassEditar.Text,
+                    Telefono = eTxTtEditar.Text,
+
+
+                };
+                Cambios("Empleados", "Actualizar", kEY, date, eTxTnEdit.Text);
+            }
+        }
+
+        private void listBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                aTxTnEditar.Text = ListaP[listBox1.SelectedIndex].Nombre;
+                aTxTpEditar.Text = ListaP[listBox1.SelectedIndex].PrecioXUnidad.ToString();
+                aTxTtEditar.Text = ListaP[listBox1.SelectedIndex].Tipo;
+                aTxTcEditar.Text = ListaP[listBox1.SelectedIndex].Cantidad.ToString();
+
+            }
+            catch { }
+        }
+
+        private void PbtnEditar_Click(object sender, EventArgs e)
+        {
+            if (aTxTnEditar.Text != "" && aTxTpEditar.Text != "" && aTxTtEditar.Text != "" && aTxTcEditar.Text != "")
+            {
+                string kEY = ListaP[listBox1.SelectedIndex].Id;
+                var date = new Objproductos
+                {
+                    Nombre = aTxTnEditar.Text,
+                    Cantidad = int.Parse(aTxTcEditar.Text),
+                    PrecioXUnidad = int.Parse(aTxTpEditar.Text),
+                    Tipo = aTxTtEditar.Text,
+                };
+                Cambios("Productos", "Actualizar", kEY, date, aTxTnEditar.Text);
+            }
+        }
+
+        private void OpcionesDeAdminForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            FormLogin frm = new FormLogin();
+
+            frm.Show();
+        }
+
+
+
+
+        //eTxTnEdit.Text = ListaP[listBox2.SelectedIndex];
+        //eTxTaEdit;
+        //cTxTcEdit;
+        //eTxTbEditar;
+        //eTxTtEditar;
+        //eTxTcedulaEditar;
+        //eTxTuEditar;
+        //eTxTpassEditar;
+        //EditarDTXTEP;
     }
 }

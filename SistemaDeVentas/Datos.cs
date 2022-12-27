@@ -6,7 +6,7 @@
         public string Nombre { get; set; }
         public string Tipo { get; set; }
         public int Cantidad { get; set; }
-        public int Precio { get; set; }
+        public int PrecioXUnidad { get; set; }
     }
     public class Clientes
     {
@@ -27,8 +27,9 @@
         public string MetodoDePago { get; set; }
         public string Facturador { get; set; }
         public int Total { get; set; }
+        public string IDfacturador { get; set; }
 
-    }
+}
     public class ClientesFactura
     {
         public string Id { get; set; }
@@ -65,6 +66,26 @@
         public string Tipo { set; get; }
         public int PrecioXUnidad { set; get; }
         public int Cantidad { set; get; }
+    }
+    public class ObjEmpleados
+    {
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Cedula { get; set; }
+        public string Correo { get; set; }
+        public string Cumpleanos { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
+        public string Pass { get; set; }
+        public string User { get; set; }
+    }
+    public class ObjClientes
+    {
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Correo { get; set; }
+        public string Telefono { get; set; }
+        public string Cumpleanos { get; set; }
     }
     public class Empleados
     {

@@ -102,7 +102,7 @@ namespace SistemaDeVentas
                     Id = elemento.Key,
                     Nombre = elemento.Value.Nombre,
                     Cantidad = elemento.Value.Cantidad,
-                    Precio = elemento.Value.Precio,
+                    PrecioXUnidad = elemento.Value.PrecioXUnidad,
                     Tipo = elemento.Value.Tipo
                     
                 });
@@ -142,7 +142,7 @@ namespace SistemaDeVentas
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Start();
-            LBLCajero.Text = ENombre + " ( "+EID+" )";
+            LBLCajero.Text = ENombre;
             client = new FireSharp.FirebaseClient(Conexion);
             DatosConexion();
             PmetodoDepago.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -273,6 +273,8 @@ namespace SistemaDeVentas
                 },
                 ProductosfacturaList = GetPRODUCTOS(),
                 Facturador = LBLCajero.Text,
+                IDfacturador = EID
+
 
 
             };
@@ -292,7 +294,7 @@ namespace SistemaDeVentas
                 {
                     Cantidad = (c - Convert.ToInt32(DataTableLista[2,i].Value)),
                     Nombre = DataTableLista[1,i].Value.ToString(),
-                    Precio = int.Parse(P),
+                    PrecioXUnidad = int.Parse(P),
                     Tipo = DataTableLista[3,i].Value.ToString(),
                 };
                 string URL = "/Datos/Productos/" + DataTableLista[0,i].Value.ToString();
@@ -315,7 +317,7 @@ namespace SistemaDeVentas
                 {
                     int s = Convert.ToInt32(DataTableLista.Rows[i].Cells[2].Value); ;
                     DataTableLista[2, i].Value = s + int.Parse(textBox1.Text);
-                    DataTableLista[5, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].Precio;
+                    DataTableLista[5, i].Value = (s + int.Parse(textBox1.Text)) * ListaP[Pproductos.SelectedIndex].PrecioXUnidad;
                     add = false;
                 }
             }
@@ -327,8 +329,8 @@ namespace SistemaDeVentas
                 DataTableLista[1, X].Value = ListaP[Pproductos.SelectedIndex].Nombre;
                 DataTableLista[2, X].Value = int.Parse(textBox1.Text);
                 DataTableLista[3, X].Value = ListaP[Pproductos.SelectedIndex].Tipo;
-                DataTableLista[4, X].Value = ListaP[Pproductos.SelectedIndex].Precio + " $";
-                DataTableLista[5, X].Value = ListaP[Pproductos.SelectedIndex].Precio * int.Parse(textBox1.Text) + " $";
+                DataTableLista[4, X].Value = ListaP[Pproductos.SelectedIndex].PrecioXUnidad + " $";
+                DataTableLista[5, X].Value = ListaP[Pproductos.SelectedIndex].PrecioXUnidad * int.Parse(textBox1.Text) + " $";
             }
         }
         private void BtnEnlistar_Click(object sender, EventArgs e)
@@ -363,7 +365,7 @@ namespace SistemaDeVentas
         }
         void UPD() 
         {
-            Dprecio.Text = ListaP[Pproductos.SelectedIndex].Precio.ToString() + " $";
+            Dprecio.Text = ListaP[Pproductos.SelectedIndex].PrecioXUnidad.ToString() + " $";
             Dcantidad.Text = ListaP[Pproductos.SelectedIndex].Cantidad.ToString() + " en stock";
         }
 
@@ -402,12 +404,11 @@ namespace SistemaDeVentas
           
         }
 
-        private void BtnSalir_Click(object sender, EventArgs e)
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             FormLogin mv = new FormLogin();
             mv.Show();
-
-            this.Close();
         }
     }
 

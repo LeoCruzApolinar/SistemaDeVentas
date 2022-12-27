@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.LbLNtotal = new System.Windows.Forms.Label();
             this.LbLTotal = new System.Windows.Forms.Label();
-            this.BtnSalir = new System.Windows.Forms.Button();
-            this.BtnEliminar = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.LBLTH = new System.Windows.Forms.Label();
             this.LBLHora = new System.Windows.Forms.Label();
@@ -100,39 +98,10 @@
             this.LbLTotal.TabIndex = 9;
             this.LbLTotal.Text = "Total:";
             // 
-            // BtnSalir
-            // 
-            this.BtnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.BtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnSalir.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnSalir.ForeColor = System.Drawing.Color.White;
-            this.BtnSalir.Location = new System.Drawing.Point(1281, 29);
-            this.BtnSalir.Name = "BtnSalir";
-            this.BtnSalir.Size = new System.Drawing.Size(94, 51);
-            this.BtnSalir.TabIndex = 0;
-            this.BtnSalir.Text = "Salir";
-            this.BtnSalir.UseVisualStyleBackColor = false;
-            this.BtnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
-            // 
-            // BtnEliminar
-            // 
-            this.BtnEliminar.BackColor = System.Drawing.Color.Maroon;
-            this.BtnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnEliminar.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnEliminar.ForeColor = System.Drawing.Color.White;
-            this.BtnEliminar.Location = new System.Drawing.Point(13, 27);
-            this.BtnEliminar.Name = "BtnEliminar";
-            this.BtnEliminar.Size = new System.Drawing.Size(94, 53);
-            this.BtnEliminar.TabIndex = 4;
-            this.BtnEliminar.Text = "Eliminar";
-            this.BtnEliminar.UseVisualStyleBackColor = false;
-            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.LBLTH);
             this.panel4.Controls.Add(this.LBLHora);
-            this.panel4.Controls.Add(this.BtnEliminar);
-            this.panel4.Controls.Add(this.BtnSalir);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 703);
             this.panel4.Name = "panel4";
@@ -143,7 +112,7 @@
             // 
             this.LBLTH.AutoSize = true;
             this.LBLTH.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LBLTH.Location = new System.Drawing.Point(572, 45);
+            this.LBLTH.Location = new System.Drawing.Point(576, 45);
             this.LBLTH.Name = "LBLTH";
             this.LBLTH.Size = new System.Drawing.Size(76, 31);
             this.LBLTH.TabIndex = 6;
@@ -509,10 +478,10 @@
             // LBLCajero
             // 
             this.LBLCajero.AutoSize = true;
-            this.LBLCajero.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LBLCajero.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LBLCajero.Location = new System.Drawing.Point(12, 34);
             this.LBLCajero.Name = "LBLCajero";
-            this.LBLCajero.Size = new System.Drawing.Size(59, 23);
+            this.LBLCajero.Size = new System.Drawing.Size(46, 17);
             this.LBLCajero.TabIndex = 3;
             this.LBLCajero.Text = "Cajero";
             // 
@@ -559,6 +528,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -576,8 +546,6 @@
         }
 
         #endregion
-        private Button BtnSalir;
-        private Button BtnEliminar;
         private Panel panel4;
         private Label LbLNtotal;
         private Label LbLTotal;

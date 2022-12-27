@@ -106,7 +106,9 @@ namespace SistemaDeVentas
                 }
                 else 
                 {
-                    
+                    this.Hide();
+                    OpcionesDeAdminForm frm = new OpcionesDeAdminForm();
+                    frm.Show();
                 }
             }
             else
