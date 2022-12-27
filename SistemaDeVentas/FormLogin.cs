@@ -154,5 +154,10 @@ namespace SistemaDeVentas
                 }
             }
         }
+
+        private void FormLogin_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
